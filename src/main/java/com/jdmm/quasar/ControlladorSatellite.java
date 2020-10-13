@@ -18,6 +18,8 @@ import com.microsoft.azure.functions.annotation.HttpTrigger;
 
 import java.util.Optional;
 
+import org.apache.log4j.BasicConfigurator;
+
 /**
  * Azure Functions with HTTP Trigger.
  */
@@ -38,6 +40,7 @@ public class ControlladorSatellite {
                 @BindingName("satellite_name")String nombreSatellite,
             final ExecutionContext context) {
         context.getLogger().info("Java HTTP trigger processed a request.");
+        BasicConfigurator.configure();
         ResultadoSatellitesOut resultadoSatellite = new ResultadoSatellitesOut();
         try {
 	        final String query = request.getQueryParameters().get("name");
@@ -59,17 +62,18 @@ public class ControlladorSatellite {
 						throw new ExcepcionQasar("Ocurrio un error al descifrar los mensajes");
 					}
 					if(!resultado.isExitoso()) {
-						throw new ExcepcionQasar("Ocurrio un error al calcular la ubicacion de los satellites");
+						throw new ExcepcionQasar("Ocurrio un error al calcular la ubicación");
+						
 					}
 				}
 				
 	        	return request.createResponseBuilder(HttpStatus.OK).body(resultado).build();
 	        } else {
-	        	return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Please pass a name on the query string or in the request body").build();
+	        	return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("La información no es suficiente para procesar la información").build();
 	        }
         } catch (ExcepcionQasar e) {
 			e.printStackTrace();
-			return request.createResponseBuilder(HttpStatus.NOT_FOUND).body(resultadoSatellite).build();
+			return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("La información no es suficiente para procesar la información").build();
 		}
     }
 }

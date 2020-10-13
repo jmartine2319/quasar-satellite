@@ -1,11 +1,14 @@
 package com.jdmm.quasar.logica;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.math3.fitting.leastsquares.LevenbergMarquardtOptimizer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresOptimizer.Optimum;
 
 import com.jdmm.quasar.dto.ResultadoUbicacion;
@@ -16,6 +19,8 @@ import com.lemmingapex.trilateration.NonLinearLeastSquaresSolver;
 import com.lemmingapex.trilateration.TrilaterationFunction;
 
 public class LogicaSatellite {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(LogicaSatellite.class);
 
 	/**
 	 * Metodo que permite calcular la distancia
@@ -105,9 +110,10 @@ public class LogicaSatellite {
 		ResultadoUbicacion resultado = new ResultadoUbicacion();
 		resultado.setExitoso(true);
 		try {
+
 			double[] posicionSatellite = obtenerUbicacion(nombreSatellite);
 			if(posicionSatellite.length==0) {
-				System.out.println("no se pudo obtener las propiedades");
+				LOGGER.error("no se pudo obtener las propiedades");
 				resultado.setExitoso(false);
 				return resultado;
 			}
@@ -121,6 +127,7 @@ public class LogicaSatellite {
 			resultado.setPosicionX(centroid[0]);
 			resultado.setPosicionY(centroid[1]);
 		}catch(Exception e) {
+			LOGGER.error("Ocurrio un error al calcularUbicacion ",e);
 			resultado.setExitoso(false);
 		}
 		return resultado;
