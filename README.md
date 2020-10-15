@@ -1,10 +1,12 @@
 # Quasar-Satellite
 
-Quasar-fuego es una aplicación que permite obtener la localización de un satellite y descifrar el mensaje recibido por el mismo.
+Quasar-satellite es una aplicación que permite obtener la localización de un satellite y descifrar el mensaje recibido tomando en relación el ultimo satellite buscado.
 
 ## Instalación
 
-En el directorio de los archivos del aplicativo ejecutar los siguientes comandos
+La aplicación se encuentra desplegada en una azure function, por medio de maven se utiliza el artefacto y se reailza el despliegue, y se activa cuando se realiza una petición HTTP
+
+En el directorio de los archivos del aplicativo ejecutar los siguientes comandos si se desea ejecutar localmente
 
 ```bash
 mvn clean -DskipTests package
