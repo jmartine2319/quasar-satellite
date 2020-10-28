@@ -89,7 +89,6 @@ public class LogicaSatellite {
 		for(int i=0;i<satellites.getSatellites().size();i++) {
 			LinkedHashMap<Integer,String> mensajes=limpiarMensaje(satellites.getSatellites().get(i).getMessage());
 			listaMensajes.add(mensajes);
-			//listaDistancias[i]=satellites.getSatellites().get(i).getDistance();
 		}
 		ResultadoUbicacion mensaje = fusionarMensajes(listaMensajes);
 		ResultadoUbicacion distancia = calcularUbicacion(satellites);
@@ -112,7 +111,7 @@ public class LogicaSatellite {
 	/**
 	 * Metodo para calcular la ubicacion usando la distancia respecto a los otros satelites
 	 */
-	private ResultadoUbicacion calcularUbicacion(SatellitesIn satellites) {
+	public ResultadoUbicacion calcularUbicacion(SatellitesIn satellites) {
 		ResultadoUbicacion resultado = new ResultadoUbicacion();
 		resultado.setExitoso(true);
 		try {

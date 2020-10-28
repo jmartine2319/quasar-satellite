@@ -9,7 +9,7 @@ La aplicación se encuentra desplegada en una azure function, por medio de maven
 En el directorio de los archivos del aplicativo ejecutar los siguientes comandos si se desea ejecutar localmente
 
 ```bash
-mvn clean -DskipTests package
+mvn clean package
 mvn azure-functions:run
 ```
 

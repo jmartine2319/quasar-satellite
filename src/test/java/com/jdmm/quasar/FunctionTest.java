@@ -1,5 +1,9 @@
 package com.jdmm.quasar;
 
+import com.jdmm.quasar.dto.ResultadoUbicacion;
+import com.jdmm.quasar.dto.SatelliteIn;
+import com.jdmm.quasar.dto.SatellitesIn;
+import com.jdmm.quasar.logica.LogicaSatellite;
 import com.microsoft.azure.functions.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -22,32 +26,31 @@ public class FunctionTest {
      */
     @Test
     public void testHttpTriggerJava() throws Exception {
-        // Setup
-       /* @SuppressWarnings("unchecked")
-        final HttpRequestMessage<Optional<String>> req = mock(HttpRequestMessage.class);
-
-        final Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("name", "Azure");
-        doReturn(queryParams).when(req).getQueryParameters();
-
-        final Optional<String> queryBody = Optional.empty();
-        doReturn(queryBody).when(req).getBody();
-
-        doAnswer(new Answer<HttpResponseMessage.Builder>() {
-            @Override
-            public HttpResponseMessage.Builder answer(InvocationOnMock invocation) {
-                HttpStatus status = (HttpStatus) invocation.getArguments()[0];
-                return new HttpResponseMessageMock.HttpResponseMessageBuilderMock().status(status);
-            }
-        }).when(req).createResponseBuilder(any(HttpStatus.class));
-
-        final ExecutionContext context = mock(ExecutionContext.class);
-        doReturn(Logger.getGlobal()).when(context).getLogger();
-
-        // Invoke
-        final HttpResponseMessage ret = new ControlladorSatellite().run(req, context);
-
-        // Verify
-        assertEquals(ret.getStatus(), HttpStatus.OK);*/
+       LogicaSatellite logicaSatellite = new LogicaSatellite();
+       SatelliteIn satellite = new SatelliteIn();
+       satellite.setDistance(100.0);
+       List<String> listaMensajes = new ArrayList<>();
+       listaMensajes.add("hola");
+       listaMensajes.add("");
+       satellite.setMessage(listaMensajes);
+       satellite.setName("kenobi");
+       SatelliteIn satellite2 = new SatelliteIn();
+       satellite2.setDistance(115.5);
+       List<String> listaMensajes2 = new ArrayList<>();
+       listaMensajes2.add("");
+       listaMensajes2.add("mundo");
+       satellite2.setMessage(listaMensajes2);
+       satellite2.setName("skywalker");
+       SatellitesIn satellites = new SatellitesIn();
+       List<SatelliteIn> listaSatellite = new ArrayList<>();
+       listaSatellite.add(satellite2);				
+       listaSatellite.add(satellite);
+       satellites.setSatellites(listaSatellite);
+       ResultadoUbicacion resultado = logicaSatellite.calcularUbicacion(satellites);
+       System.out.println("||| mensaje "+resultado.getMensaje()+" "+resultado.getPosicionX()+" "+resultado.getPosicionY());
+       assertEquals(resultado.getPosicionX(),-226.16405812370527);
+       assertEquals(resultado.getPosicionY(),0.0);
     }
 }
+
+
