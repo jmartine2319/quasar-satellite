@@ -16,7 +16,7 @@ mvn azure-functions:run
 ## Uso
 
 ```bash
-curl --location --request POST 'https://quasar-topsecret.azurewebsites.net/topsecret_split{nombre-satellite}' \
+curl --location --request POST 'https://quasar-topsecret.azurewebsites.net/api/topsecret_split{nombre-satellite}' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "distance":115.5,
